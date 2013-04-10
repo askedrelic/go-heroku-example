@@ -1,20 +1,13 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
-	"os"
+    "github.com/hoisie/web"
 )
 
+func hello(val string) string { return "hello " + val }
+
 func main() {
-	http.HandleFunc("/", hello)
-	fmt.Println("listening...")
-	err := http.ListenAndServe(":"+os.Getenv("PORT"), nil)
-	if err != nil {
-		panic(err)
-	}
+    web.Get("/(.*)", hello)
+    web.Run("0.0.0.0:9999")
 }
 
-func hello(res http.ResponseWriter, req *http.Request) {
-	fmt.Fprintln(res, "hello, world")
-}
